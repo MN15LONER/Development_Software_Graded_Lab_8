@@ -51,7 +51,15 @@ export default function ProjectsScreen({ navigation }) {
   }, []);
 
   const handleProjectPress = (project) => {
-    setSelectedProject(project);
+    // Ensure selectedProject.taskCount is a number to avoid passing strings into native props
+    const raw = project && project.taskCount;
+    const tc = Number(raw);
+    const safeProject = {
+      ...project,
+      taskCount: Number.isFinite(tc) ? tc : 0,
+    };
+
+    setSelectedProject(safeProject);
     navigation.navigate('Tasks');
   };
 
@@ -61,11 +69,8 @@ export default function ProjectsScreen({ navigation }) {
       onPress={() => handleProjectPress(item)}
     >
       <Text style={styles.projectName}>{item.name}</Text>
-      {
-       
-      }
       {(() => {
-        const tc = Number(item.taskCount);
+        const tc = Number(item && item.taskCount);
         const displayCount = Number.isFinite(tc) ? tc : 0;
         return (
           <Text style={styles.taskCount}>
