@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { collection, onSnapshot, query } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import { db } from '../firebaseConfig';
 import { useProject } from '../context/ProjectContext';
 
 export default function ProjectsScreen({ navigation }) {
