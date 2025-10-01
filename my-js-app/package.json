@@ -11,6 +11,9 @@
   "dependencies": {
     "expo": "~54.0.10",
     "expo-status-bar": "~3.0.8",
+    "@react-navigation/bottom-tabs": "^6.5.7",
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/stack": "^6.3.16",
     "firebase": "^12.3.0",
     "react": "19.1.0",
     "react-native": "0.81.4"
