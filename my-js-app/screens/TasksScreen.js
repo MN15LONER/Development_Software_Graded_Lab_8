@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { db } from '../../firebaseConfig';
 import {View, Text, FlatList,
   TouchableOpacity,
   StyleSheet,
@@ -17,7 +18,6 @@ import {
   updateDoc,
   getDoc,
 } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
 import { useProject } from '../context/ProjectContext';
 
 export default function TasksScreen({ navigation }) {
@@ -45,7 +45,7 @@ export default function TasksScreen({ navigation }) {
                 text: 'OK',
                 onPress: () => {
                   setSelectedProject(null);
-                  navigation.navigate('ProjectsTab');
+                  navigation.navigate('Projects');
                 },
               },
             ],
