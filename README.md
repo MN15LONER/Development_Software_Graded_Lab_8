@@ -37,7 +37,7 @@ A lightweight React Native app that helps users manage projects and tasks with r
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/your-username/projecttracker-app.git
+git clone https://github.com/MN15LONER/Development_Software_Graded_Lab_8
 cd projecttracker-app
 npm install
 npx expo install
