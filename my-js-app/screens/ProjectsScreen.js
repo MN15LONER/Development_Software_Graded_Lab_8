@@ -23,9 +23,20 @@ export default function ProjectsScreen({ navigation }) {
       const projectsData = [];
       
       snapshot.forEach((doc) => {
+        const data = doc.data() || {};
+
+        const rawTaskCount = data.taskCount;
+        const taskCount =
+          typeof rawTaskCount === 'number'
+            ? rawTaskCount
+            : typeof rawTaskCount === 'string' && rawTaskCount.trim() !== ''
+            ? Number(rawTaskCount)
+            : 0;
+
         projectsData.push({
           id: doc.id,
-          ...doc.data(),
+          ...data,
+          taskCount: Number.isFinite(taskCount) ? taskCount : 0,
         });
       });
       
@@ -50,9 +61,18 @@ export default function ProjectsScreen({ navigation }) {
       onPress={() => handleProjectPress(item)}
     >
       <Text style={styles.projectName}>{item.name}</Text>
-      <Text style={styles.taskCount}>
-        {item.taskCount || 0} {item.taskCount === 1 ? 'task' : 'tasks'}
-      </Text>
+      {
+       
+      }
+      {(() => {
+        const tc = Number(item.taskCount);
+        const displayCount = Number.isFinite(tc) ? tc : 0;
+        return (
+          <Text style={styles.taskCount}>
+            {displayCount} {displayCount === 1 ? 'task' : 'tasks'}
+          </Text>
+        );
+      })()}
     </TouchableOpacity>
   );
 

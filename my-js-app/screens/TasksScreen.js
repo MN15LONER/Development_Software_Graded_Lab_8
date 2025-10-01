@@ -67,21 +67,43 @@ export default function TasksScreen({ navigation }) {
       tasksQuery,
       async (snapshot) => {
         const tasksData = [];
-        
         snapshot.forEach((doc) => {
+          const data = doc.data() || {};
+
+          // Normalize any numeric-like fields inside a task (example: priority, estimate)
+          // Add normalization here as needed. For now, ensure no numeric strings cause issues.
+          const normalized = { ...data };
+          Object.keys(normalized).forEach((k) => {
+            const v = normalized[k];
+            if (typeof v === 'string') {
+              // If it's a string that looks like a number, coerce it.
+              const maybeNum = v.trim();
+              if (maybeNum !== '' && !Number.isNaN(Number(maybeNum))) {
+                normalized[k] = Number(maybeNum);
+              }
+            }
+          });
+
           tasksData.push({
             id: doc.id,
-            ...doc.data(),
+            ...normalized,
           });
         });
         
         setTasks(tasksData);
         setLoading(false);
 
+        // Update task count in the project document. Coerce to number explicitly to
+        // avoid numeric types being stored as strings which can cause native crashes
         const projectRef = doc(db, 'projects', selectedProject.id);
-        await updateDoc(projectRef, {
-          taskCount: tasksData.length,
-        });
+        try {
+          await updateDoc(projectRef, {
+            taskCount: Number(tasksData.length),
+          });
+        } catch (e) {
+          // If update fails (e.g., permissions), log but don't crash UI flow
+          console.error('Failed to update project taskCount:', e);
+        }
       },
       (error) => {
         console.error('Error fetching tasks:', error);
