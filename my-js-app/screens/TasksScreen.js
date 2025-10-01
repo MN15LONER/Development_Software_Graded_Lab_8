@@ -189,7 +189,7 @@ export default function TasksScreen({ navigation }) {
   if (loading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size={48} color="#007AFF" />
       </View>
     );
   }
