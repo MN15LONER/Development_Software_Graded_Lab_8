@@ -60,5 +60,4 @@ async function initializeData() {
   }
 }
 
-// Run the initialization
 initializeData();

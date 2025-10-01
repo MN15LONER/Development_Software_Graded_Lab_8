@@ -8,7 +8,6 @@ import TasksScreen from '../screens/TasksScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-// Stack Navigator for Projects Tab
 function ProjectsStack() {
   return (
     <Stack.Navigator>
@@ -26,7 +25,6 @@ function ProjectsStack() {
   );
 }
 
-// Main Tab Navigator
 function TabNavigator() {
   return (
     <Tab.Navigator
